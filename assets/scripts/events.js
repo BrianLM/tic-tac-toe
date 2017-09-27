@@ -1,4 +1,5 @@
 'use strict'
+const getFormFields = require('../../lib/get-form-fields')
 
 const cellClick = function (event) {
   const cellIndex = +(this.attributes['data-index'].value)
@@ -31,8 +32,19 @@ const finishTurn = function () {
   $('#turn').attr('src', turnIndicator())
 }
 
+const modalTest = function (event) {
+  event.preventDefault()
+  const modalTarget = $('#' + event.target.attributes['data-modal'].value + '')
+  const data = getFormFields(event.target)
+  console.log(data)
+  modalTarget.modal('hide')
+}
+
 const addHandlers = function () {
   $('div[data-move]').on('click', cellClick)
+  $('#signup').on('submit', modalTest)
+  $('#signin').on('submit', modalTest)
+  $('#change-password').on('submit', modalTest)
 }
 
 module.exports = {
