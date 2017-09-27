@@ -1,0 +1,53 @@
+body {
+  background-color: $body-backcolor;
+}
+
+.jumbotron {
+  background-color: $jumbotron-backcolor;
+  text-align: center;
+
+  p {
+    font-size: $jumbotron-p-font-size;
+  }
+}
+
+.gametile {
+  background-color: $jumbotron-backcolor;
+  height: 50px;
+  width: 50px;
+}
+
+.grid {
+  height: 100px;
+  margin: 0;
+
+  &.right {
+    @include breakpoint(tiny) {
+      border-right: 5px solid $black;
+    }
+    border-right: 5px solid $black;
+  }
+
+  &.top {
+    border-top: 5px solid $black;
+  }
+
+  &.left {
+    border-left: 5px solid $black;
+  }
+
+  &.bottom {
+    border-bottom: 5px solid $black;
+  }
+}
+
+.turn-img {
+  background-color: $body-backcolor;
+  height: 20px;
+  width: 20px;
+}
+
+.center {
+  margin: auto;
+  width: 50%;
+}

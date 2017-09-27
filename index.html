@@ -1,25 +1,77 @@
 <!DOCTYPE html>
 <html>
-    <head>
-      <title>Example</title>
-      <meta name="viewport" content="width=device-width, initial-scale=1">
 
-      <!-- Do not add `link` tags-->
-      <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+<head>
+  <title>Example</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-      <!-- Do not add `script` tags-->
-      <script src="public/vendor.js" type="text/javascript" charset="utf-8" defer></script>
-      <script src="public/application.js" type="text/javascript" charset="utf-8" defer></script>
-    </head>
-    <body class="container-fluid">
-      <h1>Example</h1>
+  <!-- Do not add `link` tags-->
+  <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
 
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-      eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-      minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-      ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-      velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-      cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
-      est laborum.</p>
-    </body>
+  <!-- Do not add `script` tags-->
+  <script src="public/vendor.js" type="text/javascript" charset="utf-8" defer></script>
+  <script src="public/application.js" type="text/javascript" charset="utf-8" defer></script>
+</head>
+
+<body class="container-fluid">
+  <div class="container-fluid">
+    <nav class="navbar navbar-inverse">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#siteNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+          <a class="navbar-brand" href="#">Tic-Tac-Toe</a>
+        </div>
+        <div class="collapse navbar-collapse" id="siteNavbar">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#">Sign Up</a></li>
+            <li><a href="#">Login</a></li>
+            <li><a href="#" class="hidden" id="currentUser">Current user</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </div>
+  <div class="jumbotron-fluid jumbotron container">
+    <h1>Tic-Tac-Toe</h1><br/>
+    <p>Tic-Tac-Toe is a match-3 game. Match your tile across any row to win. Use your tile to block a row to make sure your opponent does not finish a row!</p>
+  </div>
+  <br/>
+  <div class="row" >
+    <div class="col-xs-4"></div>
+    <div class="col-xs-4">
+      <h4 class="text-center">Current move:<img id="turn" class="turn-img" src="http://www.clker.com/cliparts/e/0/f/4/12428125621652493290X_mark_18x18_02.svg.med.png" alt="X"></h4>
+    </div>
+    <div class="col-xs-4"></div>
+  </div>
+  <br/>
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-4"></div>
+      <div class="col-xs-4 gameboard">
+        <div class="row">
+          <div data-move="" data-index="0" class="col-xs-4 grid bottom right"></div>
+          <div data-move="" data-index="1" class="col-xs-4 grid left bottom right"></div>
+          <div data-move="" data-index="2" class="col-xs-4 grid left bottom"></div>
+        </div>
+        <div class="row">
+          <div data-move="" data-index="3" class="col-xs-4 grid top bottom right"></div>
+          <div data-move="" data-index="4" class="col-xs-4 grid top bottom left right"></div>
+          <div data-move="" data-index="5" class="col-xs-4 grid top bottom left"></div>
+        </div>
+        <div class="row">
+          <div data-move="" data-index="6" class="col-xs-4 grid top right"></div>
+          <div data-move="" data-index="7" class="col-xs-4 grid top left right"></div>
+          <div data-move="" data-index="8" class="col-xs-4 grid top left"></div>
+        </div>
+      </div>
+      <div class="col-xs-4"></div>
+    </div>
+  </div>
+
+</body>
+
 </html>
