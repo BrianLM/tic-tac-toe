@@ -19,17 +19,24 @@
       <div class="container-fluid">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#siteNavbar">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </button>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
           <a class="navbar-brand" href="#">Tic-Tac-Toe</a>
         </div>
         <div class="collapse navbar-collapse" id="siteNavbar">
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">Sign Up</a></li>
-            <li><a href="#">Login</a></li>
-            <li><a href="#" class="hidden" id="currentUser">Current user</a></li>
+            <li data-user="no-user"><a href="#signin-modal" data-toggle="modal" >Sign Up</a></li>
+            <li data-user="no-user"><a href="#login-modal" data-toggle="modal">Login</a></li>
+            <li data-user="user" class="hidden">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="current-user">Current user</a>
+              <ul class="dropdown-menu">
+                <li><a href="#">My Games</a></li>
+                <li><a href="#change-password-modal" data-toggle="modal">Change Password</a></li>
+                <li><a href="#" id="sign-out">Sign Out</a></li>
+              </ul>
+            </li>
           </ul>
         </div>
       </div>
@@ -47,6 +54,7 @@
     </div>
     <div class="col-xs-4"></div>
   </div>
+  <section id="content"></section>
   <br/>
   <div class="container">
     <div class="row">
@@ -71,6 +79,77 @@
       <div class="col-xs-4 side-board"></div>
     </div>
   </div>
+
+  <div id="signin-modal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <form id="signup">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Sign Up!</h4>
+        </div>
+        <div class="modal-body">
+          <p>Your email is your user name.</p>
+          <input name="credentials[email]" type="email" placeholder="Your email address">
+          <input name="credentials[password]" type="password" placeholder="A simple password">
+          <input name="credentials[password_confirmation]" type="password" placeholder="The same password">
+       </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <input type="submit" name="submit" class="btn btn-default" value="Submit &raquo;">
+        </div>
+      </form>
+      </div>
+    </div>
+  </div>
+  <div id="login-modal" class="modal fade" data-backdrop="false" role="dialog">
+
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <form id="signin">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Sign In!</h4>
+        </div>
+        <div class="modal-body">
+          <p>Welcome back. Remember, your email is your user name.</p>
+          <input name="credentials[email]" type="email" placeholder="Your email address">
+          <input name="credentials[password]" type="password" placeholder="A simple password">
+       </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <input type="submit" name="submit" class="btn btn-default" value="Submit &raquo;">
+        </div>
+      </form>
+      </div>
+    </div>
+  </div>
+
+  <div id="change-password-modal" class="modal fade" data-backdrop="false" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <form id="change-password">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Sign In!</h4>
+        </div>
+        <div class="modal-body">
+          <p>Change your password?.</p>
+          <input name="passwords[old]" type="password" placeholder="Your old password">
+          <input name="passwords[new]" type="password" placeholder="Your new password">
+       </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <input type="submit" name="submit" class="btn btn-default" value="Submit &raquo;">
+        </div>
+      </form>
+      </div>
+    </div>
+  </div>
+
 
 </body>
 
