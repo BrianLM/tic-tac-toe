@@ -1,5 +1,7 @@
 'use strict'
 const getFormFields = require('../../lib/get-form-fields')
+const authApi = require('./auth/api')
+const authUI = require('./auth/ui')
 
 const cellClick = function (event) {
   const cellIndex = +(this.attributes['data-index'].value)
@@ -34,17 +36,49 @@ const finishTurn = function () {
 
 const modalTest = function (event) {
   event.preventDefault()
-  const modalTarget = $('#' + event.target.attributes['data-modal'].value + '')
+  const modalTarget = event.target.attributes['data-modal'].value
   const data = getFormFields(event.target)
   console.log(data)
-  modalTarget.modal('hide')
+  $('#' + modalTarget + '').modal('hide')
+}
+
+const signOutUser = function (event) {
+  event.preventDefault()
+  authApi.signOut()
+    .then(authUI.signOutSuccess)
+    .catch(authUI.signOutFailure)
+}
+
+const signInUser = function (event) {
+  const data = getFormFields(this)
+  event.preventDefault()
+  authApi.signIn(data)
+    .then(authUI.signInSuccess)
+    .catch(authUI.signInFailure)
+}
+
+const signUpUser = function (event) {
+  event.preventDefault()
+  const data = getFormFields(event.target)
+  authApi.signUp(data)
+    .then(authUI.signUpSuccess)
+    .catch(authUI.signUpFailure)
+}
+
+const changePassword = function (event) {
+  const data = getFormFields(this)
+  event.preventDefault()
+  authApi.changePassword(data)
+    .then(authUI.changePasswordSuccess)
+    .catch(authUI.changePasswordFailure)
 }
 
 const addHandlers = function () {
   $('div[data-move]').on('click', cellClick)
-  $('#signup').on('submit', modalTest)
-  $('#signin').on('submit', modalTest)
-  $('#change-password').on('submit', modalTest)
+  $('#sign-out').on('click', signOutUser)
+  $('#signup').on('submit', signUpUser)
+  $('#signin').on('submit', signInUser)
+  $('#change-password').on('submit', changePassword)
 }
 
 module.exports = {

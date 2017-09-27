@@ -91,13 +91,13 @@
         </div>
         <div class="modal-body">
           <p>Your email is your user name.</p>
-          <input name="credentials[email]" type="email" placeholder="Your email address">
-          <input name="credentials[password]" type="password" placeholder="A simple password">
-          <input name="credentials[password_confirmation]" type="password" placeholder="The same password">
+          <input name="credentials[email]" type="email" placeholder="Your email address" required>
+          <input name="credentials[password]" type="password" placeholder="A simple password" required>
+          <input name="credentials[password_confirmation]" type="password" placeholder="The same password" required>
        </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <input type="submit" name="submit" class="btn btn-default" value="Submit &raquo;">
+          <input type="submit" class="btn btn-default" value="Submit &raquo;">
         </div>
       </form>
       </div>
@@ -115,12 +115,12 @@
         </div>
         <div class="modal-body">
           <p>Welcome back. Remember, your email is your user name.</p>
-          <input name="credentials[email]" type="email" placeholder="Your email address">
-          <input name="credentials[password]" type="password" placeholder="A simple password">
+          <input name="credentials[email]" type="email" placeholder="Your email address" required>
+          <input name="credentials[password]" type="password" placeholder="A simple password" required>
        </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <input type="submit" name="submit" class="btn btn-default" value="Submit &raquo;">
+          <input type="submit" class="btn btn-default" value="Submit &raquo;">
         </div>
       </form>
       </div>
@@ -138,12 +138,13 @@
         </div>
         <div class="modal-body">
           <p>Change your password?.</p>
-          <input name="passwords[old]" type="password" placeholder="Your old password">
-          <input name="passwords[new]" type="password" placeholder="Your new password">
+          <input name="passwords[old]" type="password" placeholder="Your old password" required>
+          <input name="passwords[new]" type="password" placeholder="Your new password" required>
+          <section id="changeComment"></section>
        </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <input type="submit" name="submit" class="btn btn-default" value="Submit &raquo;">
+          <input type="submit" class="btn btn-default" value="Submit &raquo;">
         </div>
       </form>
       </div>
