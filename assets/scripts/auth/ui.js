@@ -72,12 +72,14 @@ const clearModals = function () {
 
 const toggleUserDisplay = function (check) {
   if (check) {
-    $('li[data-user="no-user"]').addClass('hidden')
-    $('li[data-user="user"]').removeClass('hidden')
-    $('#current-user').text(store.user.email)
+    $('[data-user="no-user"]').addClass('hidden')
+    $('[data-user="user"]').removeClass('hidden')
+    // $('#playarea').removeClass('hidden')
+    $('#current-user').text(store.user.email).append('<span class="caret"></span>')
   } else {
-    $('li[data-user="no-user"]').removeClass('hidden')
-    $('li[data-user="user"]').addClass('hidden')
+    $('[data-user="no-user"]').removeClass('hidden')
+    // $('#playarea').addClass('hidden')
+    $('[data-user="user"]').addClass('hidden')
   }
 }
 
