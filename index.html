@@ -30,6 +30,7 @@
             <li><button id="new-game" data-user="user" class="btn btn-success navbar-btn hidden">New Game</button></li>
             <li><button id="join-game" data-user="user" class="btn btn-info navbar-btn hidden">Join Game</button></li>
             <li><button id="old-games" data-user="user" class="btn btn-info navbar-btn hidden">Rejoin Games</button></li>
+            <li><button id="invite-game" data-user="user" class="btn btn-info navbar-btn hidden">Invite Opponent</button></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li data-user="no-user"><a href="#signin-modal" data-toggle="modal" >Sign Up</a></li>
@@ -61,7 +62,7 @@
     <div class="row" >
       <div class="col-xs-4"></div>
       <div class="col-xs-4">
-        <h4 class="text-center">Current move:<img id="turn" class="turn-img" src="http://www.clker.com/cliparts/e/0/f/4/12428125621652493290X_mark_18x18_02.svg.med.png" alt="X"></h4>
+        <h4 class="text-center" id="gamestate">Current move:<img id="turn" class="turn-img" src="http://www.clker.com/cliparts/e/0/f/4/12428125621652493290X_mark_18x18_02.svg.med.png" alt="X"></h4>
       </div>
       <div class="col-xs-4"></div>
     </div>
