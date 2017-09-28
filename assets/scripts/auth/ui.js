@@ -15,6 +15,7 @@ const signUpFailure = function (response, status, xhr) {
   console.log('Sign Up failure UI response', response)
   console.log('Sign Up failure UI status', status)
   console.log('Sign Up failure UI xhr', xhr)
+  $('#signUpComment').html('<br/><p><mark>Sorry, those login credentials cannot be used.</mark></p>')
 }
 
 // Sign In promises
@@ -31,6 +32,7 @@ const signInFailure = function (response, status, xhr) {
   console.log('Sign In failure UI response', response)
   console.log('Sign In failure UI status', status)
   console.log('Sign In failure UI xhr', xhr)
+  $('#signInComment').html('<br/><p><mark>Please check login credentials and try again.</mark></p>')
 }
 
 // Change Password promises
@@ -46,7 +48,7 @@ const changePasswordFailure = function (response, status, xhr) {
   console.log('Change Password failure UI response', response)
   console.log('Change Password failure UI status', status)
   console.log('Change Password failure UI xhr', xhr)
-  $('#changeComment').append('<p>Could not update password.</p>')
+  $('#changeComment').append('<p><mark>Could not update password.</mark></p>')
 }
 
 const signOutSuccess = function (response, status, xhr) {
@@ -70,6 +72,9 @@ const clearModals = function () {
   $('input[name="passwords[old]"]').val('')
   $('input[name="passwords[new]"]').val('')
   $('input[name="credentials[password_confirmation]"]').val('')
+  $('#signInComment').text('')
+  $('#changeComment').text('')
+  $('#signUpComment').text('')
 }
 
 const toggleUserDisplay = function (check) {
