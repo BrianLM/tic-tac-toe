@@ -21,22 +21,19 @@ body {
   margin: 0;
 
   &.right {
-    @include breakpoint(tiny) {
-      border-right: 5px solid $black;
-    }
-    border-right: 5px solid $black;
+    border-right: 3px solid $black;
   }
 
   &.top {
-    border-top: 5px solid $black;
+    border-top: 3px solid $black;
   }
 
   &.left {
-    border-left: 5px solid $black;
+    border-left: 3px solid $black;
   }
 
   &.bottom {
-    border-bottom: 5px solid $black;
+    border-bottom: 3px solid $black;
   }
 
   @include breakpoint(tiny) {
