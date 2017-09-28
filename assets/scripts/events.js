@@ -2,6 +2,8 @@
 const getFormFields = require('../../lib/get-form-fields')
 const authApi = require('./auth/api')
 const authUI = require('./auth/ui')
+const gameAPI = require('./game/api')
+const gameUI = require('./game/ui')
 
 const cellClick = function (event) {
   const cellIndex = +(this.attributes['data-index'].value)
@@ -73,12 +75,22 @@ const changePassword = function (event) {
     .catch(authUI.changePasswordFailure)
 }
 
+const startNewGame = function (event) {
+  $('#playarea').removeClass('hidden')
+  event.preventDefault()
+  gameAPI.startNewGame()
+    .then(gameUI.onCreateSuccess)
+    .catch(gameUI.onCreateFailure)
+}
+
 const addHandlers = function () {
   $('div[data-move]').on('click', cellClick)
   $('#sign-out').on('click', signOutUser)
   $('#signup').on('submit', signUpUser)
   $('#signin').on('submit', signInUser)
   $('#change-password').on('submit', changePassword)
+  $('#new-game').on('click', startNewGame)
+  $('#old-games')
 }
 
 module.exports = {
