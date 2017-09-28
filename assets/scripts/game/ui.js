@@ -1,12 +1,16 @@
 'use strict'
 // const store = require('../store.js')
 const game = require('../game.js')
+const conditions = require('./conditions.js')
 
 const onCreateSuccess = function (response, status, xhr) {
   console.log('Create game success UI response', response)
   console.log('Create game success UI status', status)
   console.log('Create game success UI xhr', xhr)
   game.game = response.game
+  $('#confirm-new-modal').modal('hide')
+  conditions.setTiles()
+  $('#gamestate').html('Current move:<img id="turn" class="turn-img" src="http://www.clker.com/cliparts/e/0/f/4/12428125621652493290X_mark_18x18_02.svg.med.png" alt="X">')
 }
 
 const onCreateFailure = function (response, status, xhr) {
@@ -20,6 +24,7 @@ const onMoveSuccess = function (response, status, xhr) {
   console.log('Move success UI status', status)
   console.log('Move success UI xhr', xhr)
   game.game = response.game
+  conditions.setTiles()
 }
 
 const onMoveFailure = function (response, status, xhr) {
@@ -44,8 +49,11 @@ const onGetSuccess = function (response, status, xhr) {
   console.log('Get success UI response', response)
   console.log('Get success UI status', status)
   console.log('Get success UI xhr', xhr)
-  game.game = response.gameA
+  game.game = response.game
   $('#input-join').val('')
+  conditions.setTiles()
+  $('#playarea').removeClass('hidden')
+  $('#list-modal').modal('hide')
 }
 
 const onGetFailure = function (response, status, xhr) {
@@ -58,6 +66,18 @@ const onListSuccess = function (response, status, xhr) {
   console.log('List Success UI response', response)
   console.log('List Success UI status', status)
   console.log('List Success UI xhr', xhr)
+  game.games = response.games
+  const listGameArea = $('#listContent')
+  listGameArea.empty()
+  const gameAreaForm = $('<form/>')
+  game.games.forEach((current, index, array) => {
+    if (current['player_o'] === null) {
+      gameAreaForm.append('<div><p><button class="btn btn-default btn-md" data-gameid="' + current.id + '">' + current.id + '</button>As player X</p></div>')
+    } else {
+      gameAreaForm.append('<div><p><button class="btn btn-default btn-md" data-gameid="' + current.id + '">' + current.id + '</button>Player X ' + current['player_x'].email + ' vs. Player O ' + current['player_o'].email + '</p></div>')
+    }
+  })
+  listGameArea.append(gameAreaForm)
 }
 
 const onListFailure = function (response, status, xhr) {

@@ -1,5 +1,6 @@
 'use strict'
 const store = require('../store.js')
+const game = require('../game.js')
 
 // Sign Up promises
 const signUpSuccess = function (response, status, xhr) {
@@ -53,6 +54,7 @@ const signOutSuccess = function (response, status, xhr) {
   console.log('Sign Out success UI status', status)
   console.log('Sign Out success UI xhr', xhr)
   store.user = null
+  game.game = null
   toggleUserDisplay(false)
 }
 
@@ -74,11 +76,10 @@ const toggleUserDisplay = function (check) {
   if (check) {
     $('[data-user="no-user"]').addClass('hidden')
     $('[data-user="user"]').removeClass('hidden')
-    // $('#playarea').removeClass('hidden')
     $('#current-user').text(store.user.email).append('<span class="caret"></span>')
   } else {
     $('[data-user="no-user"]').removeClass('hidden')
-    // $('#playarea').addClass('hidden')
+    $('#playarea').addClass('hidden')
     $('[data-user="user"]').addClass('hidden')
   }
 }

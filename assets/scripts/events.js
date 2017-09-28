@@ -11,100 +11,15 @@ const cellClick = function (event) {
   const cell = $('div[data-index="' + cellIndex + '"]')
   const currentPlayer = $('#gameboard').attr('data-player')
   const data = {'game': {'cell': { 'index': cellIndex, 'value': currentPlayer }, 'over': 'false'}}
-  if (cell.attr('data-move') === '') {
-    gameAPI.updateGame(data)
-      .then(gameUI.onMoveSuccess)
-      .then(setTiles)
-      .catch(gameUI.onMoveFailure)
+  if (cell.attr('data-move') === '' && !game.game.over) {
+    sendGameUpdate(data)
   }
 }
 
-const setTiles = function () {
-  const state = game.game.cells
-  state.forEach(function (current, index) {
-    const cell = $('div[data-index="' + index + '"]')
-    if (current === 'x') {
-      cell.attr('data-move', current)
-      cell.html('<img src="' + turnIndicator('x') + '" alt="x" class="cell-size">')
-    } else if (current === 'o') {
-      cell.attr('data-move', current)
-      cell.html('<img src="' + turnIndicator('o') + '" alt="o" class="cell-size">')
-    } else {
-      cell.attr('data-move', current)
-      cell.empty()
-    }
-  })
-  const xMoves = state.filter(x => x === 'x')
-  const oMoves = state.filter(o => o === 'o')
-  const some = state.some(x => x !== '')
-  if (some) {
-    checkWinCondition()
-  }
-  if (game.game.over === false) {
-    if (xMoves.length === oMoves.length) {
-      finishTurn('x')
-    } else {
-      finishTurn('o')
-    }
-  } else {
-    gameAPI.updateGame(game)
-      .then(gameUI.onFinishSuccess)
-      .catch(gameUI.onFinishFailure)
-  }
-}
-const turnIndicator = function (currentPlayer) {
-  if (currentPlayer === 'x') {
-    return 'http://www.clker.com/cliparts/e/0/f/4/12428125621652493290X_mark_18x18_02.svg.med.png'
-  } else {
-    return 'https://thecliparts.com/wp-content/uploads/2016/12/drawing-letter-o-clipart.png'
-  }
-}
-
-const finishTurn = function (currentPlayer) {
-  const board = $('#gameboard')
-  if (currentPlayer === 'x') {
-    board.attr('data-player', 'x')
-  } else {
-    board.attr('data-player', 'o')
-  }
-  $('#turn').attr('src', turnIndicator(currentPlayer))
-}
-
-const checkWinCondition = function () {
-  const state = game.game.cells
-  if (state[0] === state[1] && state[0] === state[2] && state[0] !== '') {
-    $('div[data-move]').off('click', cellClick)
-    $('#gamestate').html('Winner!<img id="turn" class="turn-img" src="' + turnIndicator(state[0]) + '" alt="' + state[0] + '">')
-    game.game.over = 'true'
-  } else if (state[0] === state[4] && state[0] === state[8] && state[0] !== '') {
-    $('div[data-move]').off('click', cellClick)
-    $('#gamestate').html('Winner!<img id="turn" class="turn-img" src="' + turnIndicator(state[0]) + '" alt="' + state[0] + '">')
-    game.game.over = 'true'
-  } else if (state[0] === state[3] && state[0] === state[6] && state[0] !== '') {
-    $('div[data-move]').off('click', cellClick)
-    $('#gamestate').html('Winner!<img id="turn" class="turn-img" src="' + turnIndicator(state[0]) + '" alt="' + state[0] + '">')
-    game.game.over = 'true'
-  } else if (state[1] === state[4] && state[1] === state[7] && state[1] !== '') {
-    $('div[data-move]').off('click', cellClick)
-    $('#gamestate').html('Winner!<img id="turn" class="turn-img" src="' + turnIndicator(state[1]) + '" alt="' + state[1] + '">')
-    game.game.over = 'true'
-  } else if (state[2] === state[4] && state[2] === state[6] && state[2] !== '') {
-    $('div[data-move]').off('click', cellClick)
-    $('#gamestate').html('Winner!<img id="turn" class="turn-img" src="' + turnIndicator(state[2]) + '" alt="' + state[2] + '">')
-    game.game.over = 'true'
-  } else if (state[2] === state[5] && state[2] === state[8] && state[2] !== '') {
-    $('div[data-move]').off('click', cellClick)
-    $('#gamestate').html('Winner!<img id="turn" class="turn-img" src="' + turnIndicator(state[2]) + '" alt="' + state[2] + '">')
-    game.game.over = 'true'
-  } else if (state[3] === state[4] && state[3] === state[5] && state[3] !== '') {
-    $('div[data-move]').off('click', cellClick)
-    $('#gamestate').html('Winner!<img id="turn" class="turn-img" src="' + turnIndicator(state[3]) + '" alt="' + state[3] + '">')
-    game.game.over = 'true'
-  } else if (state[6] === state[7] && state[6] === state[8] && state[6] !== '') {
-    $('div[data-move]').off('click', cellClick)
-    $('#gamestate').html('Winner!<img id="turn" class="turn-img" src="' + turnIndicator(state[6]) + '" alt="' + state[6] + '">')
-    game.game.over = 'true'
-  }
+const sendGameUpdate = function (data) {
+  gameAPI.updateGame(data)
+    .then(gameUI.onMoveSuccess)
+    .catch(gameUI.onMoveFailure)
 }
 
 const signOutUser = function (event) {
@@ -144,9 +59,8 @@ const startNewGame = function (event) {
     event.preventDefault()
     gameAPI.startNewGame()
       .then(gameUI.onCreateSuccess)
-      .then(setTiles)
-      .then($('#gamestate').html('Current move: <img id="turn" class="turn-img" src="' + turnIndicator('x') + '" alt="x">'))
       .catch(gameUI.onCreateFailure)
+    $('div[data-move]').on('click', cellClick)
   } else {
     switch (event.target.id) {
       case 'forfeit-game': {
@@ -154,19 +68,17 @@ const startNewGame = function (event) {
         gameAPI.updateGame(data)
           .then(gameUI.onFinishSuccess)
           .catch(gameUI.onFinishFailure)
-          .then($('#confirm-new-modal').modal('hide'))
           .then(gameAPI.startNewGame)
           .then(gameUI.onCreateSuccess)
           .catch(gameUI.onCreateFailure)
-          .then(setTiles)
+        $('div[data-move]').on('click', cellClick)
         break
       }
       case 'save-game': {
         gameAPI.startNewGame()
           .then(gameUI.onCreateSuccess)
           .catch(gameUI.onCreateFailure)
-          .then(setTiles)
-          .then($('#confirm-new-modal').modal('hide'))
+        $('div[data-move]').on('click', cellClick)
         break
       }
     }
@@ -179,9 +91,9 @@ const getGameByID = function (event) {
   const data = getFormFields(this)
   gameAPI.onGetGame(data.game.id)
     .then(gameUI.onGetSuccess)
-    .catch(gameUI.onGetFailure)
-    .then($('#playarea').removeClass('hidden'))
-    .then(setTiles)
+    .catch(gameAPI.onJoinGame(data.game.id)
+      .then(gameUI.onGetSuccess)
+    )
   $('#join-modal').modal('hide')
 }
 
@@ -190,6 +102,16 @@ const getGamesByUser = function (event) {
   gameAPI.listGames()
     .then(gameUI.onListSuccess)
     .catch(gameUI.onListFailure)
+    .then($('#list-modal').modal('show'))
+}
+
+const getSelectedGame = function (event) {
+  event.preventDefault()
+  const selectedID = event.target.attributes['data-gameid'].value
+  gameAPI.onGetGame(selectedID)
+    .then(gameUI.onGetSuccess)
+    .catch(gameUI.onGetFailure)
+  $('#list-modal').modal('hide')
 }
 
 const addHandlers = function () {
@@ -203,8 +125,10 @@ const addHandlers = function () {
   $('#list-games').on('click', getGamesByUser)
   $('#forfeit-game').on('click', startNewGame)
   $('#save-game').on('click', startNewGame)
+  $('#list-modal').on('click', 'button[data-gameid]', getSelectedGame)
 }
 
 module.exports = {
-  addHandlers
+  addHandlers,
+  cellClick
 }

@@ -29,7 +29,7 @@
           <ul class="nav navbar-nav">
             <li><button id="new-game" data-user="user" class="btn btn-success navbar-btn hidden">New Game</button></li>
             <li><button data-toggle="modal" data-target="#join-modal" data-user="user" class="btn btn-info navbar-btn hidden">Join Game</button></li>
-            <li><button id="list-games"data-toggle="modal" data-target="#join-modal" data-user="user" class="btn btn-info navbar-btn hidden">Rejoin Games</button></li>
+            <li><button id="list-games" data-user="user" class="btn btn-info navbar-btn hidden">Rejoin Games</button></li>
             <li><button data-toggle="modal" data-target="#join-modal" data-user="user" class="btn btn-info navbar-btn hidden">Invite Player</button></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
@@ -210,6 +210,25 @@
     </div>
   </div>
 
+  <div id="list-modal" class="modal fade" data-backdrop="false" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Join a game</h4>
+        </div>
+        <div class="modal-body">
+          <p>Here's a list of the games you are currently in:</p>
+          <br/>
+          <section id="listContent"></section>
+       </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
 </body>
 

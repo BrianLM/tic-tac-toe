@@ -34,9 +34,29 @@ const onGetGame = function (id) {
   })
 }
 
+const onJoinGame = function (id) {
+  return $.ajax({
+    url: config.apiOrigin + '/games/' + id,
+    method: 'PATCH',
+    headers: {
+      Authorization: 'Token token=' + store.user.token
+    }
+  })
+}
+
 const listGames = function () {
   return $.ajax({
     url: config.apiOrigin + '/games/?over=false',
+    method: 'GET',
+    headers: {
+      Authorization: 'Token token=' + store.user.token
+    }
+  })
+}
+
+const getAllGames = function () {
+  return $.ajax({
+    url: config.apiOrigin + '/games',
     method: 'GET',
     headers: {
       Authorization: 'Token token=' + store.user.token
@@ -48,5 +68,7 @@ module.exports = {
   startNewGame,
   updateGame,
   onGetGame,
-  listGames
+  listGames,
+  getAllGames,
+  onJoinGame
 }
