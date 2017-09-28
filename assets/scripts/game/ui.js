@@ -29,106 +29,42 @@ const onMoveFailure = function (response, status, xhr) {
 }
 
 const onFinishSuccess = function (response, status, xhr) {
-  console.log('Move success UI response', response)
-  console.log('Move success UI status', status)
-  console.log('Move success UI xhr', xhr)
+  console.log('Finish Success UI response', response)
+  console.log('Finish Success UI status', status)
+  console.log('Finish Success UI xhr', xhr)
 }
 
 const onFinishFailure = function (response, status, xhr) {
-  console.log('Move failure UI response', response)
-  console.log('Move failure UI status', status)
-  console.log('Move failure UI xhr', xhr)
+  console.log('Finish failure UI response', response)
+  console.log('Finish failure UI status', status)
+  console.log('Finish failure UI xhr', xhr)
 }
 
-// const setTiles = function () {
-//   console.log(api)
-//   const state = game.game.cells
-//   state.forEach(function (current, index) {
-//     const cell = $('div[data-index="' + index + '"]')
-//     if (current === 'x') {
-//       cell.attr('data-move', current)
-//       cell.html('<img src="' + turnIndicator('x') + '" alt="x" class="cell-size">')
-//     } else if (current === 'o') {
-//       cell.attr('data-move', current)
-//       cell.html('<img src="' + turnIndicator('o') + '" alt="o" class="cell-size">')
-//     } else {
-//       cell.attr('data-move', current)
-//       cell.empty()
-//     }
-//   })
-//   const xMoves = state.filter(x => x === 'x')
-//   const oMoves = state.filter(o => o === 'o')
-//   const some = state.some(x => x !== '')
-//   if (some) {
-//     checkWinCondition()
-//   }
-//   if (game.game.over === false) {
-//     if (xMoves.length === oMoves.length) {
-//       finishTurn('x')
-//     } else {
-//       finishTurn('o')
-//     }
-//   } else {
-//     api.updateGame(game)
-//       .then(onFinishSuccess)
-//       .catch(onFinishFailure)
-//   }
-// }
+const onGetSuccess = function (response, status, xhr) {
+  console.log('Get success UI response', response)
+  console.log('Get success UI status', status)
+  console.log('Get success UI xhr', xhr)
+  game.game = response.gameA
+  $('#input-join').val('')
+}
 
-// const turnIndicator = function (currentPlayer) {
-//   if (currentPlayer === 'x') {
-//     return 'http://www.clker.com/cliparts/e/0/f/4/12428125621652493290X_mark_18x18_02.svg.med.png'
-//   } else {
-//     return 'https://thecliparts.com/wp-content/uploads/2016/12/drawing-letter-o-clipart.png'
-//   }
-// }
-//
-// const finishTurn = function (currentPlayer) {
-//   const board = $('#gameboard')
-//   if (currentPlayer === 'x') {
-//     board.attr('data-player', 'x')
-//   } else {
-//     board.attr('data-player', 'o')
-//   }
-//   $('#turn').attr('src', turnIndicator(currentPlayer))
-// }
+const onGetFailure = function (response, status, xhr) {
+  console.log('Get failure UI response', response)
+  console.log('Get failure UI status', status)
+  console.log('Get failure UI xhr', xhr)
+}
 
-// const checkWinCondition = function () {
-//   const state = game.game.cells
-//   if (state[0] === state[1] && state[0] === state[2] && state[0] !== '') {
-//     $('div[data-move]').off('click', events.cellClick)
-//     $('#gamestate').html('Winner!<img id="turn" class="turn-img" src="' + turnIndicator(state[0]) + '" alt="X">')
-//     game.game.over = 'true'
-//   } else if (state[0] === state[4] && state[0] === state[8] && state[0] !== '') {
-//     $('div[data-move]').off('click', events.cellClick)
-//     $('#gamestate').html('Winner!<img id="turn" class="turn-img" src="' + turnIndicator(state[0]) + '" alt="X">')
-//     game.game.over = 'true'
-//   } else if (state[0] === state[3] && state[0] === state[6] && state[0] !== '') {
-//     $('div[data-move]').off('click', events.cellClick)
-//     $('#gamestate').html('Winner!<img id="turn" class="turn-img" src="' + turnIndicator(state[0]) + '" alt="X">')
-//     game.game.over = 'true'
-//   } else if (state[1] === state[4] && state[1] === state[7] && state[1] !== '') {
-//     $('div[data-move]').off('click', events.cellClick)
-//     $('#gamestate').html('Winner!<img id="turn" class="turn-img" src="' + turnIndicator(state[0]) + '" alt="X">')
-//     game.game.over = 'true'
-//   } else if (state[2] === state[4] && state[2] === state[6] && state[2] !== '') {
-//     $('div[data-move]').off('click', events.cellClick)
-//     $('#gamestate').html('Winner!<img id="turn" class="turn-img" src="' + turnIndicator(state[0]) + '" alt="X">')
-//     game.game.over = 'true'
-//   } else if (state[2] === state[5] && state[2] === state[8] && state[2] !== '') {
-//     $('div[data-move]').off('click', events.cellClick)
-//     $('#gamestate').html('Winner!<img id="turn" class="turn-img" src="' + turnIndicator(state[0]) + '" alt="X">')
-//     game.game.over = 'true'
-//   } else if (state[3] === state[4] && state[3] === state[5] && state[3] !== '') {
-//     $('div[data-move]').off('click', events.cellClick)
-//     $('#gamestate').html('Winner!<img id="turn" class="turn-img" src="' + turnIndicator(state[0]) + '" alt="X">')
-//     game.game.over = 'true'
-//   } else if (state[6] === state[7] && state[6] === state[8] && state[6] !== '') {
-//     $('div[data-move]').off('click', events.cellClick)
-//     $('#gamestate').html('Winner!<img id="turn" class="turn-img" src="' + turnIndicator(state[0]) + '" alt="X">')
-//     game.game.over = 'true'
-//   }
-// }
+const onListSuccess = function (response, status, xhr) {
+  console.log('List Success UI response', response)
+  console.log('List Success UI status', status)
+  console.log('List Success UI xhr', xhr)
+}
+
+const onListFailure = function (response, status, xhr) {
+  console.log('List failure UI response', response)
+  console.log('List failure UI status', status)
+  console.log('List failure UI xhr', xhr)
+}
 
 module.exports = {
   onCreateSuccess,
@@ -136,5 +72,9 @@ module.exports = {
   onMoveSuccess,
   onMoveFailure,
   onFinishSuccess,
-  onFinishFailure
+  onFinishFailure,
+  onListSuccess,
+  onListFailure,
+  onGetSuccess,
+  onGetFailure
 }

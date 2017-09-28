@@ -28,9 +28,9 @@
         <div class="collapse navbar-collapse" id="siteNavbar">
           <ul class="nav navbar-nav">
             <li><button id="new-game" data-user="user" class="btn btn-success navbar-btn hidden">New Game</button></li>
-            <li><button id="old-game" data-toggle="modal" data-target="#join-modal" data-user="user" class="btn btn-info navbar-btn hidden">Join Game</button></li>
-            <li><button id="list-games" data-user="user" class="btn btn-info navbar-btn hidden">Rejoin Games</button></li>
-            <li><button id="invite" data-user="user" class="btn btn-info navbar-btn hidden">Invite Player</button></li>
+            <li><button data-toggle="modal" data-target="#join-modal" data-user="user" class="btn btn-info navbar-btn hidden">Join Game</button></li>
+            <li><button id="list-games"data-toggle="modal" data-target="#join-modal" data-user="user" class="btn btn-info navbar-btn hidden">Rejoin Games</button></li>
+            <li><button data-toggle="modal" data-target="#join-modal" data-user="user" class="btn btn-info navbar-btn hidden">Invite Player</button></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li data-user="no-user"><a href="#signin-modal" data-toggle="modal" >Sign Up</a></li>
@@ -169,14 +169,14 @@
     <div class="modal-dialog">
       <!-- Modal content-->
       <div class="modal-content">
-        <form id="join-game" data-modal="change-password-modal">
+        <form id="join-form" data-modal="change-password-modal">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
           <h4 class="modal-title">Join a game</h4>
         </div>
         <div class="modal-body">
           <p>Have a game to join? Want to pick up where you left off?</p>
-          <input name="game[id]" type="text" placeholder="Enter the game ID" required>
+          <input id="input-join" name="game[id]" type="text" placeholder="Enter the game ID" required>
           <br/>
           <section id="joinComment"></section>
        </div>
@@ -185,6 +185,27 @@
           <input type="submit" class="btn btn-default" value="Submit &raquo;">
         </div>
       </form>
+      </div>
+    </div>
+  </div>
+
+  <div id="confirm-new-modal" class="modal fade" data-backdrop="false" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Start a new game</h4>
+        </div>
+        <div class="modal-body">
+          <p>Do you want to forfeit this game, or come back to it later?</p>
+          <br/>
+       </div>
+        <div class="modal-footer">
+          <button id="forfeit-game" type="button" class="btn btn-default">Forfeit</button>
+          <button id="save-game" type="button" class="btn btn-default">Save</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        </div>
       </div>
     </div>
   </div>

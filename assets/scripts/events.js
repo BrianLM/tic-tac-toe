@@ -139,12 +139,57 @@ const changePassword = function (event) {
 }
 
 const startNewGame = function (event) {
-  $('#playarea').removeClass('hidden')
+  if (Object.keys(game).length === 0 || game.game.over) {
+    $('#playarea').removeClass('hidden')
+    event.preventDefault()
+    gameAPI.startNewGame()
+      .then(gameUI.onCreateSuccess)
+      .then(setTiles)
+      .then($('#gamestate').html('Current move: <img id="turn" class="turn-img" src="' + turnIndicator('x') + '" alt="x">'))
+      .catch(gameUI.onCreateFailure)
+  } else {
+    switch (event.target.id) {
+      case 'forfeit-game': {
+        const data = {'game': {'cell': { 'index': 0, 'value': game.game.cells[0] }, 'over': 'true'}}
+        gameAPI.updateGame(data)
+          .then(gameUI.onFinishSuccess)
+          .catch(gameUI.onFinishFailure)
+          .then($('#confirm-new-modal').modal('hide'))
+          .then(gameAPI.startNewGame)
+          .then(gameUI.onCreateSuccess)
+          .catch(gameUI.onCreateFailure)
+          .then(setTiles)
+        break
+      }
+      case 'save-game': {
+        gameAPI.startNewGame()
+          .then(gameUI.onCreateSuccess)
+          .catch(gameUI.onCreateFailure)
+          .then(setTiles)
+          .then($('#confirm-new-modal').modal('hide'))
+        break
+      }
+    }
+    $('#confirm-new-modal').modal('show')
+  }
+}
+
+const getGameByID = function (event) {
   event.preventDefault()
-  gameAPI.startNewGame()
-    .then(gameUI.onCreateSuccess)
+  const data = getFormFields(this)
+  gameAPI.onGetGame(data.game.id)
+    .then(gameUI.onGetSuccess)
+    .catch(gameUI.onGetFailure)
+    .then($('#playarea').removeClass('hidden'))
     .then(setTiles)
-    .catch(gameUI.onCreateFailure)
+  $('#join-modal').modal('hide')
+}
+
+const getGamesByUser = function (event) {
+  event.preventDefault()
+  gameAPI.listGames()
+    .then(gameUI.onListSuccess)
+    .catch(gameUI.onListFailure)
 }
 
 const addHandlers = function () {
@@ -154,7 +199,10 @@ const addHandlers = function () {
   $('#signin').on('submit', signInUser)
   $('#change-password').on('submit', changePassword)
   $('#new-game').on('click', startNewGame)
-  $('#old-games')
+  $('#join-form').on('submit', getGameByID)
+  $('#list-games').on('click', getGamesByUser)
+  $('#forfeit-game').on('click', startNewGame)
+  $('#save-game').on('click', startNewGame)
 }
 
 module.exports = {
