@@ -33,8 +33,8 @@ With the watcher in place, and the invite to game added, multiplayer against a p
 Future desired updates include
 1. An email user link, rather than game ID sharing.
 2. Using the local machine to stay logged in as well as
-  1. Custom Icons
-  2. Style customizations
+  - Custom Icons
+  - Style customizations
 3. Game ready notifications in the page for the games you are still playing and are waiting for you.
 
 
