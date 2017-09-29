@@ -14,6 +14,7 @@ const onCreateSuccess = function (response, status, xhr) {
   $('#gamestate').html('Current move:<img id="turn" class="turn-img" src="' + conditions.turnIndicator('x') + '" alt="X">')
   $('#player-tag img').attr('src', conditions.turnIndicator('x')).attr('alt', 'x')
   $('#player').attr('data-tag', 'x')
+  $('#opponent').attr('data-tag', 'none')
 }
 
 const onCreateFailure = function (response, status, xhr) {
@@ -60,10 +61,18 @@ const onGetSuccess = function (response, status, xhr) {
   if (game.game['player_x'].email === store.user.email) {
     $('#player-tag img').attr('src', conditions.turnIndicator('x')).attr('alt', 'x')
     $('#player').attr('data-tag', 'x')
+    if (game.game['player_0'] !== null) {
+      $('#opponent').attr('data-tag', 'none')
+      $('#opponent-text').html('Would you like to play the computer?<span id="opponent-tag"></span><button id="ai-on" class="btn btn-md btn-default">Play AI</button>')
+    } else {
+      $('#opponent-text').html('You are playing against: <strong>' + game.game['player_o'].email + '</strong>')
+      $('#opponent').attr('data-tag', 'player')
+    }
   } else {
     $('#player-tag img').attr('src', conditions.turnIndicator('o')).attr('alt', 'o')
     $('#opponent-text').html('You are playing against: <strong>' + game.game['player_x'].email + '</strong>')
     $('#player').attr('data-tag', 'o')
+    $('#opponent').attr('data-tag', 'player')
   }
 }
 

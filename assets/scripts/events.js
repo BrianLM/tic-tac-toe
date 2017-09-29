@@ -12,8 +12,9 @@ const cellClick = function (event) {
   const cell = $('div[data-index="' + cellIndex + '"]')
   const currentPlayer = $('#gameboard').attr('data-player')
   const playingAs = $('#player').attr('data-tag')
+  const haveOpponent = $('#opponent').attr('data-tag')
   const data = {'game': {'cell': { 'index': cellIndex, 'value': currentPlayer }, 'over': 'false'}}
-  if (cell.attr('data-move') === '' && !game.game.over && (playingAs === 'x' || currentPlayer === playingAs)) {
+  if (cell.attr('data-move') === '' && !game.game.over && (haveOpponent === 'none' || currentPlayer === playingAs)) {
     sendGameUpdate(data)
   }
 }
@@ -123,6 +124,12 @@ const getStatistics = function (event) {
     .catch(gameUI.onStatsFailure)
 }
 
+const toggleAI = function (event) {
+  event.preventDefault()
+  $('#opponent-text').html('You are playing against: <strong>the computer</strong>')
+  $('#opponent').attr('data-tag', 'computer')
+}
+
 const addHandlers = function () {
   $('div[data-move]').on('click', cellClick)
   $('#sign-out').on('click', signOutUser)
@@ -134,6 +141,7 @@ const addHandlers = function () {
   $('#list-games').on('click', getGamesByUser)
   $('#forfeit-game').on('click', startNewGame)
   $('#save-game').on('click', startNewGame)
+  $('#opponent-text').on('click', '#ai-on', toggleAI)
   $('#list-modal').on('click', 'button[data-gameid]', getSelectedGame)
   $('#wins').on('keydown', getStatistics)
 }
