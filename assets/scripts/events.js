@@ -132,7 +132,7 @@ const getStatistics = function (event) {
 
 const aiTurn = function (event) {
   const available = game.game.cells.map((current, index) => current === '' ? index : '').filter(x => x !== '')
-  const aiClick = Math.round(Math.random() * available.length)
+  const aiClick = Math.round(Math.random() * (available.length - 1))
   const data = {'game': {'cell': { 'index': available[aiClick], 'value': 'o' }, 'over': 'false'}}
   sendGameUpdate(data)
 }
