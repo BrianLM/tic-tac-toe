@@ -53,9 +53,21 @@ body {
   }
 }
 
-.to-center {
+.to-center-xs {
   @include breakpoint(tiny) {
     text-align: center;
+  }
+}
+
+.to-right-sm {
+  @include breakpoint(small) {
+    text-align: right;
+  }
+}
+
+.to-left-sm {
+  @include breakpoint(small) {
+    text-align: left;
   }
 }
 

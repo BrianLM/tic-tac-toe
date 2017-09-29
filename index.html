@@ -56,10 +56,10 @@
 
 
   <div id="stats" class="row hidden">
-    <div class="col-xs-12 col-sm-3 to-center"><p>Your Wins: <span id="wins"></span></p></div>
-    <div class="col-xs-12 col-sm-3 to-center"><p>Your Losses: <span id="losses"></span></p></div>
-    <div class="col-xs-12 col-sm-3 to-center"><p>Your Ties: <span id="ties"></span></p></div>
-    <div class="col-xs-12 col-sm-3 to-center"><p>Incomplete Games: <span id="remaining"></span></p></div>
+    <div class="col-xs-12 col-sm-3 to-center-xs"><p>Your Wins: <span id="wins"></span></p></div>
+    <div class="col-xs-12 col-sm-3 to-center-xs"><p>Your Losses: <span id="losses"></span></p></div>
+    <div class="col-xs-12 col-sm-3 to-center-xs"><p>Your Ties: <span id="ties"></span></p></div>
+    <div class="col-xs-12 col-sm-3 to-center-xs"><p>Incomplete Games: <span id="remaining"></span></p></div>
   </div>
   <div id="playarea" data-state="true" class="hidden">
     <div class="row" >
@@ -93,9 +93,20 @@
         </div>
         <div class="col-xs-4 side-board"></div>
       </div>
+      <div class="row" id="play-as">
+        <div id="player" class="col-xs-12 col-sm-6 to-center-xs to-right-sm" data-tag="">
+          <p>You are playing as: <span id="player-tag"><img class="turn-img" src="http://www.clker.com/cliparts/e/0/f/4/12428125621652493290X_mark_18x18_02.svg.med.png" alt="X"></span></p>
+        </div>
+        <div id="opponent" class="col-xs-12 col-sm-6 to-center-xs to-left-sm">
+          <p id="opponent-text">Would you like to play the computer?<span id="opponent-tag"></span><button id="ai-on" class="btn btn-md btn-default">Play AI</button></p>
+        </div>
+      </div>
     </div>
   </div>
 
+
+
+  <!-- Define Modals  -->
   <div id="signin-modal" class="modal fade" role="dialog">
     <div class="modal-dialog">
       <!-- Modal content-->

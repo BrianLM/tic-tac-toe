@@ -114,5 +114,6 @@ const getGameWinner = function (array) {
 
 module.exports = {
   setTiles,
-  getGameWinner
+  getGameWinner,
+  turnIndicator
 }

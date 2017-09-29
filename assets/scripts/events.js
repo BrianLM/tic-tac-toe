@@ -11,6 +11,8 @@ const cellClick = function (event) {
   const cellIndex = +(this.attributes['data-index'].value)
   const cell = $('div[data-index="' + cellIndex + '"]')
   const currentPlayer = $('#gameboard').attr('data-player')
+  const playingAs = $('#player').attr('data-tag')
+  console.log(`Current Player =-- ${currentPlayer} :--: Playing as =-- ${playingAs}`)
   const data = {'game': {'cell': { 'index': cellIndex, 'value': currentPlayer }, 'over': 'false'}}
   if (cell.attr('data-move') === '' && !game.game.over) {
     sendGameUpdate(data)

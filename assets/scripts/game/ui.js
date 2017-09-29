@@ -11,7 +11,9 @@ const onCreateSuccess = function (response, status, xhr) {
   $('#playarea').removeClass('hidden')
   $('#confirm-new-modal').modal('hide')
   conditions.setTiles()
-  $('#gamestate').html('Current move:<img id="turn" class="turn-img" src="http://www.clker.com/cliparts/e/0/f/4/12428125621652493290X_mark_18x18_02.svg.med.png" alt="X">')
+  $('#gamestate').html('Current move:<img id="turn" class="turn-img" src="' + conditions.turnIndicator('x') + '" alt="X">')
+  $('#player-tag img').attr('src', conditions.turnIndicator('x')).attr('alt', 'x')
+  $('#player').attr('data-tag', 'x')
 }
 
 const onCreateFailure = function (response, status, xhr) {
@@ -55,6 +57,14 @@ const onGetSuccess = function (response, status, xhr) {
   conditions.setTiles()
   $('#playarea').removeClass('hidden')
   $('#list-modal').modal('hide')
+  if (game.game['player_x'].email === store.user.email) {
+    $('#player-tag img').attr('src', conditions.turnIndicator('x')).attr('alt', 'x')
+    $('#player').attr('data-tag', 'x')
+  } else {
+    $('#player-tag img').attr('src', conditions.turnIndicator('o')).attr('alt', 'o')
+    $('#opponent-text').text('You are playing against: <strong>' + game.game['player_x'].email + '</strong>')
+    $('#player').attr('data-tag', 'o')
+  }
 }
 
 const onGetFailure = function (response, status, xhr) {
