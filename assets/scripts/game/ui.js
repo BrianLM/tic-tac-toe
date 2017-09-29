@@ -62,7 +62,7 @@ const onGetSuccess = function (response, status, xhr) {
     $('#player').attr('data-tag', 'x')
   } else {
     $('#player-tag img').attr('src', conditions.turnIndicator('o')).attr('alt', 'o')
-    $('#opponent-text').text('You are playing against: <strong>' + game.game['player_x'].email + '</strong>')
+    $('#opponent-text').html('You are playing against: <strong>' + game.game['player_x'].email + '</strong>')
     $('#player').attr('data-tag', 'o')
   }
 }
