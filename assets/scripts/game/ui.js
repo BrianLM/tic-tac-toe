@@ -17,6 +17,7 @@ const onCreateSuccess = function (response, status, xhr) {
   $('#player-tag img').attr('src', conditions.turnIndicator('x')).attr('alt', 'x')
   $('#player').attr('data-tag', 'x')
   $('#opponent').attr('data-tag', 'none')
+  $('#opponent-text').html('Would you like to play the computer?<span id="opponent-tag"></span><button id="ai-on" class="btn btn-md btn-default">Play AI</button>')
 }
 
 const onInviteRequest = function () {
