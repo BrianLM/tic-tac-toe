@@ -122,10 +122,8 @@ const getStatistics = function (event) {
 }
 
 const aiTurn = function (event) {
-  console.log('Computer\'s turn')
   const available = game.game.cells.map((current, index) => current === '' ? index : '').filter(x => x !== '')
   const aiClick = Math.round(Math.random() * available.length)
-  console.log(`AI click is :--: ${aiClick}, which would be ${available[aiClick]}`)
   const data = {'game': {'cell': { 'index': available[aiClick], 'value': 'o' }, 'over': 'false'}}
   sendGameUpdate(data)
 }
@@ -134,6 +132,10 @@ const toggleAI = function (event) {
   event.preventDefault()
   $('#opponent-text').html('You are playing against: <strong>the computer</strong>')
   $('#opponent').attr('data-tag', 'computer')
+  if ($('#gameboard').attr('data-player') === 'o') {
+    const data = {'game': {'cell': { 'index': 0, 'value': game.game.cells[0] }, 'over': 'false'}}
+    sendGameUpdate(data)
+  }
 }
 
 const addHandlers = function () {
