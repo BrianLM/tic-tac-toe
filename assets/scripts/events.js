@@ -66,6 +66,9 @@ const changePassword = function (event) {
 }
 
 const startNewGame = function (event) {
+  if ($(window).width() <= 767) {
+    $('#siteNavbar').collapse('toggle')
+  }
   const gameInPlay = $('#playarea').attr('data-state')
   if (Object.keys(game).length === 0 || gameInPlay === 'true') {
     event.preventDefault()
@@ -147,6 +150,12 @@ const toggleAI = function (event) {
   }
 }
 
+const tryCollapse = function () {
+  if ($(window).width() <= 767) {
+    $('#siteNavbar').collapse('toggle')
+  }
+}
+
 const addHandlers = function () {
   $('div[data-index]').on('click', cellClick)
   $('#sign-out').on('click', signOutUser)
@@ -163,6 +172,7 @@ const addHandlers = function () {
   $('#wins').on('keydown', getStatistics)
   $('#wins').on('keypress', aiTurn)
   $('#invite').on('click', onInvite)
+  $('.navbar-btn').on('click', tryCollapse)
 }
 
 module.exports = {
