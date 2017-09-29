@@ -63,7 +63,6 @@ const startNewGame = function (event) {
     gameAPI.startNewGame()
       .then(gameUI.onCreateSuccess)
       .catch(gameUI.onCreateFailure)
-    $('div[data-move]').on('click', cellClick)
   } else {
     switch (event.target.id) {
       case 'forfeit-game': {
@@ -74,14 +73,12 @@ const startNewGame = function (event) {
           .then(gameAPI.startNewGame)
           .then(gameUI.onCreateSuccess)
           .catch(gameUI.onCreateFailure)
-        $('div[data-move]').on('click', cellClick)
         break
       }
       case 'save-game': {
         gameAPI.startNewGame()
           .then(gameUI.onCreateSuccess)
           .catch(gameUI.onCreateFailure)
-        $('div[data-move]').on('click', cellClick)
         break
       }
     }
@@ -124,6 +121,15 @@ const getStatistics = function (event) {
     .catch(gameUI.onStatsFailure)
 }
 
+const aiTurn = function (event) {
+  console.log('Computer\'s turn')
+  const available = game.game.cells.map((current, index) => current === '' ? index : '').filter(x => x !== '')
+  const aiClick = Math.round(Math.random() * available.length)
+  console.log(`AI click is :--: ${aiClick}, which would be ${available[aiClick]}`)
+  const data = {'game': {'cell': { 'index': available[aiClick], 'value': 'o' }, 'over': 'false'}}
+  sendGameUpdate(data)
+}
+
 const toggleAI = function (event) {
   event.preventDefault()
   $('#opponent-text').html('You are playing against: <strong>the computer</strong>')
@@ -131,7 +137,7 @@ const toggleAI = function (event) {
 }
 
 const addHandlers = function () {
-  $('div[data-move]').on('click', cellClick)
+  $('div[data-index]').on('click', cellClick)
   $('#sign-out').on('click', signOutUser)
   $('#signup').on('submit', signUpUser)
   $('#signin').on('submit', signInUser)
@@ -144,6 +150,7 @@ const addHandlers = function () {
   $('#opponent-text').on('click', '#ai-on', toggleAI)
   $('#list-modal').on('click', 'button[data-gameid]', getSelectedGame)
   $('#wins').on('keydown', getStatistics)
+  $('#wins').on('keypress', aiTurn)
 }
 
 module.exports = {

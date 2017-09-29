@@ -86,6 +86,9 @@ const finishTurn = function (currentPlayer) {
   } else {
     board.attr('data-player', 'o')
     $('#gamestate').html('Current move:<img id="turn" class="turn-img" src="' + turnIndicator(currentPlayer) + '" alt="' + currentPlayer + '">')
+    if ($('#opponent').attr('data-tag') === 'computer') {
+      $('#wins').trigger('keypress')
+    }
   }
 }
 
