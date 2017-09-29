@@ -7,6 +7,15 @@ const gameUI = require('./game/ui')
 const game = require('./game')
 // const store = require('./store')
 
+const onInvite = function () {
+  if (game.game !== undefined) {
+    $('#inviteContent').html('<p>Your game number is ' + game.game.id + '.</p>')
+    gameUI.onInviteRequest()
+  } else {
+    $('#inviteContent').html('<p>You must be in a game to invite someone.</p>')
+  }
+}
+
 const cellClick = function (event) {
   const cellIndex = +(this.attributes['data-index'].value)
   const cell = $('div[data-index="' + cellIndex + '"]')
@@ -153,6 +162,7 @@ const addHandlers = function () {
   $('#list-modal').on('click', 'button[data-gameid]', getSelectedGame)
   $('#wins').on('keydown', getStatistics)
   $('#wins').on('keypress', aiTurn)
+  $('#invite').on('click', onInvite)
 }
 
 module.exports = {

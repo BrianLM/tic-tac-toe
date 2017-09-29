@@ -2,11 +2,13 @@
 const store = require('../store.js')
 const game = require('../game.js')
 const conditions = require('./conditions.js')
+const config = require('../config')
+const watcher = require('../watcher')
 
 const onCreateSuccess = function (response, status, xhr) {
-  console.log('Create game success UI response', response)
-  console.log('Create game success UI status', status)
-  console.log('Create game success UI xhr', xhr)
+  // console.log('Create game success UI response', response)
+  // console.log('Create game success UI status', status)
+  // console.log('Create game success UI xhr', xhr)
   game.game = response.game
   $('#playarea').removeClass('hidden')
   $('#confirm-new-modal').modal('hide')
@@ -17,43 +19,60 @@ const onCreateSuccess = function (response, status, xhr) {
   $('#opponent').attr('data-tag', 'none')
 }
 
+const onInviteRequest = function () {
+  const gameWatcher = watcher.resourceWatcher(config.apiOrigin + '/games/' + game.game.id + '/watch', {
+    Authorization: 'Token token=' + store.user.token
+  })
+  gameWatcher.on('change', function (data) {
+    $('#opponent-text').html('You are playing against: <strong>' + game.game['player_o'].email + '</strong>')
+    $('#opponent').attr('data-tag', 'player')
+    if (data.game && data.game.cells) {
+      game.game.cells = data.game.cells[1]
+      conditions.setTiles()
+    } else if (data.timeout) {
+      gameWatcher.close()
+    }
+  })
+}
+
 const onCreateFailure = function (response, status, xhr) {
-  console.log('Create game failure UI response', response)
-  console.log('Create game failure UI status', status)
-  console.log('Create game failure UI xhr', xhr)
+  // console.log('Create game failure UI response', response)
+  // console.log('Create game failure UI status', status)
+  // console.log('Create game failure UI xhr', xhr)
 }
 
 const onMoveSuccess = function (response, status, xhr) {
-  console.log('Move success UI response', response)
-  console.log('Move success UI status', status)
-  console.log('Move success UI xhr', xhr)
+  // console.log('Move success UI response', response)
+  // console.log('Move success UI status', status)
+  // console.log('Move success UI xhr', xhr)
   game.game = response.game
   conditions.setTiles()
 }
 
 const onMoveFailure = function (response, status, xhr) {
-  console.log('Move failure UI response', response)
-  console.log('Move failure UI status', status)
-  console.log('Move failure UI xhr', xhr)
+  // console.log('Move failure UI response', response)
+  // console.log('Move failure UI status', status)
+  // console.log('Move failure UI xhr', xhr)
 }
 
 const onFinishSuccess = function (response, status, xhr) {
-  console.log('Finish Success UI response', response)
-  console.log('Finish Success UI status', status)
-  console.log('Finish Success UI xhr', xhr)
+  // console.log('Finish Success UI response', response)
+  // console.log('Finish Success UI status', status)
+  // console.log('Finish Success UI xhr', xhr)
 }
 
 const onFinishFailure = function (response, status, xhr) {
-  console.log('Finish failure UI response', response)
-  console.log('Finish failure UI status', status)
-  console.log('Finish failure UI xhr', xhr)
+  // console.log('Finish failure UI response', response)
+  // console.log('Finish failure UI status', status)
+  // console.log('Finish failure UI xhr', xhr)
 }
 
 const onGetSuccess = function (response, status, xhr) {
-  console.log('Get success UI response', response)
-  console.log('Get success UI status', status)
-  console.log('Get success UI xhr', xhr)
+  // console.log('Get success UI response', response)
+  // console.log('Get success UI status', status)
+  // console.log('Get success UI xhr', xhr)
   game.game = response.game
+  const online = game.game['player_o'] !== null
   $('#input-join').val('')
   conditions.setTiles()
   $('#playarea').removeClass('hidden')
@@ -76,19 +95,33 @@ const onGetSuccess = function (response, status, xhr) {
   }
   $('#join-modal').modal('hide')
   $('#joinComment').empty()
+  if (online) {
+    const gameWatcher = watcher.resourceWatcher(config.apiOrigin + '/games/' + game.game.id + '/watch', {
+      Authorization: 'Token token=' + store.user.token
+    })
+    gameWatcher.on('change', function (data) {
+      console.log(data)
+      if (data.game && data.game.cells) {
+        game.game.cells = data.game.cells[1]
+        conditions.setTiles()
+      } else if (data.timeout) {
+        gameWatcher.close()
+      }
+    })
+  }
 }
 
 const onGetFailure = function (response, status, xhr) {
-  console.log('Get failure UI response', response)
-  console.log('Get failure UI status', status)
-  console.log('Get failure UI xhr', xhr)
+  // console.log('Get failure UI response', response)
+  // console.log('Get failure UI status', status)
+  // console.log('Get failure UI xhr', xhr)
   $('#joinComment').html('<p><mark>Sorry, no available game was found with the id ' + $('#input-join').val() + '</mark></p>')
 }
 
 const onListSuccess = function (response, status, xhr) {
-  console.log('List Success UI response', response)
-  console.log('List Success UI status', status)
-  console.log('List Success UI xhr', xhr)
+  // console.log('List Success UI response', response)
+  // console.log('List Success UI status', status)
+  // console.log('List Success UI xhr', xhr)
   game.games = response.games
   const listGameArea = $('#listContent')
   listGameArea.empty()
@@ -104,15 +137,15 @@ const onListSuccess = function (response, status, xhr) {
 }
 
 const onListFailure = function (response, status, xhr) {
-  console.log('List failure UI response', response)
-  console.log('List failure UI status', status)
-  console.log('List failure UI xhr', xhr)
+  // console.log('List failure UI response', response)
+  // console.log('List failure UI status', status)
+  // console.log('List failure UI xhr', xhr)
 }
 
 const onStatsSuccess = function (response, status, xhr) {
-  console.log('Stats Success UI response', response)
-  console.log('Stats Success UI status', status)
-  console.log('Stats Success UI xhr', xhr)
+  // console.log('Stats Success UI response', response)
+  // console.log('Stats Success UI status', status)
+  // console.log('Stats Success UI xhr', xhr)
   game.games = response.games
   let win = 0
   let loss = 0
@@ -153,9 +186,9 @@ const onStatsSuccess = function (response, status, xhr) {
 }
 
 const onStatsFailure = function (response, status, xhr) {
-  console.log('Stats failure UI response', response)
-  console.log('Stats failure UI status', status)
-  console.log('Stats failure UI xhr', xhr)
+  // console.log('Stats failure UI response', response)
+  // console.log('Stats failure UI status', status)
+  // console.log('Stats failure UI xhr', xhr)
 }
 
 module.exports = {
@@ -170,5 +203,6 @@ module.exports = {
   onGetSuccess,
   onGetFailure,
   onStatsFailure,
-  onStatsSuccess
+  onStatsSuccess,
+  onInviteRequest
 }

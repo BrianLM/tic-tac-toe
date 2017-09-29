@@ -17,6 +17,9 @@ const setTiles = function () {
       cell.empty()
     }
   })
+  if (game.game['player_o'] !== null) {
+
+  }
   const xMoves = state.filter(x => x === 'x')
   const oMoves = state.filter(o => o === 'o')
   const some = state.some(x => x !== '')
