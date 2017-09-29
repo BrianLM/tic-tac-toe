@@ -72,7 +72,7 @@ const checkWinCondition = function () {
 
 const turnIndicator = function (currentPlayer) {
   if (currentPlayer === 'x') {
-    return 'http://www.clker.com/cliparts/e/0/f/4/12428125621652493290X_mark_18x18_02.svg.med.png'
+    return 'https://www.clker.com/cliparts/e/0/f/4/12428125621652493290X_mark_18x18_02.svg.med.png'
   } else {
     return 'https://thecliparts.com/wp-content/uploads/2016/12/drawing-letter-o-clipart.png'
   }
