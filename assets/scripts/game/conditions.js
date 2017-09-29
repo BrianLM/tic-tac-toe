@@ -24,12 +24,15 @@ const setTiles = function () {
     checkWinCondition()
   }
   if (game.game.over === false) {
+    $('#playarea').attr('data-state', 'false')
     if (xMoves.length === oMoves.length) {
       finishTurn('x')
     } else {
       finishTurn('o')
     }
   } else {
+    $('#playarea').attr('data-state', 'true')
+    $('#wins').trigger('keydown')
     gameAPI.updateGame(game)
   }
 }
@@ -86,6 +89,30 @@ const finishTurn = function (currentPlayer) {
   }
 }
 
+const getGameWinner = function (array) {
+  const tie = array.every(x => x !== '')
+  if (array[0] === array[1] && array[0] === array[2] && array[0] !== '') {
+    return array[0]
+  } else if (array[0] === array[4] && array[0] === array[8] && array[0] !== '') {
+    return array[0]
+  } else if (array[0] === array[3] && array[0] === array[6] && array[0] !== '') {
+    return array[0]
+  } else if (array[1] === array[4] && array[1] === array[7] && array[1] !== '') {
+    return array[1]
+  } else if (array[2] === array[4] && array[2] === array[6] && array[2] !== '') {
+    return array[2]
+  } else if (array[2] === array[5] && array[2] === array[8] && array[2] !== '') {
+    return array[2]
+  } else if (array[3] === array[4] && array[3] === array[5] && array[3] !== '') {
+    return array[3]
+  } else if (array[6] === array[7] && array[6] === array[8] && array[6] !== '') {
+    return array[6]
+  } else if (tie) {
+    return 0
+  }
+}
+
 module.exports = {
-  setTiles
+  setTiles,
+  getGameWinner
 }

@@ -26,6 +26,7 @@ const signInSuccess = function (response, status, xhr) {
   $('#login-modal').modal('hide')
   store.user = response.user
   toggleUserDisplay(true)
+  $('#wins').trigger('keydown')
   clearModals()
 }
 const signInFailure = function (response, status, xhr) {

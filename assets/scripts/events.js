@@ -5,6 +5,7 @@ const authUI = require('./auth/ui')
 const gameAPI = require('./game/api')
 const gameUI = require('./game/ui')
 const game = require('./game')
+// const store = require('./store')
 
 const cellClick = function (event) {
   const cellIndex = +(this.attributes['data-index'].value)
@@ -54,8 +55,8 @@ const changePassword = function (event) {
 }
 
 const startNewGame = function (event) {
-  if (Object.keys(game).length === 0 || game.game.over) {
-    $('#playarea').removeClass('hidden')
+  const gameInPlay = $('#playarea').attr('data-state')
+  if (Object.keys(game).length === 0 || gameInPlay === 'true') {
     event.preventDefault()
     gameAPI.startNewGame()
       .then(gameUI.onCreateSuccess)
@@ -114,6 +115,13 @@ const getSelectedGame = function (event) {
   $('#list-modal').modal('hide')
 }
 
+const getStatistics = function (event) {
+  event.preventDefault()
+  gameAPI.getAllGames()
+    .then(gameUI.onStatsSuccess)
+    .catch(gameUI.onStatsFailure)
+}
+
 const addHandlers = function () {
   $('div[data-move]').on('click', cellClick)
   $('#sign-out').on('click', signOutUser)
@@ -126,6 +134,8 @@ const addHandlers = function () {
   $('#forfeit-game').on('click', startNewGame)
   $('#save-game').on('click', startNewGame)
   $('#list-modal').on('click', 'button[data-gameid]', getSelectedGame)
+  $('#zero').on('change', getStatistics)
+  $('#wins').on('keydown', getStatistics)
 }
 
 module.exports = {

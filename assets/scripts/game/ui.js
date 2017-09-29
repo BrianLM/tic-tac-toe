@@ -1,5 +1,5 @@
 'use strict'
-// const store = require('../store.js')
+const store = require('../store.js')
 const game = require('../game.js')
 const conditions = require('./conditions.js')
 
@@ -8,6 +8,7 @@ const onCreateSuccess = function (response, status, xhr) {
   console.log('Create game success UI status', status)
   console.log('Create game success UI xhr', xhr)
   game.game = response.game
+  $('#playarea').removeClass('hidden')
   $('#confirm-new-modal').modal('hide')
   conditions.setTiles()
   $('#gamestate').html('Current move:<img id="turn" class="turn-img" src="http://www.clker.com/cliparts/e/0/f/4/12428125621652493290X_mark_18x18_02.svg.med.png" alt="X">')
@@ -86,6 +87,55 @@ const onListFailure = function (response, status, xhr) {
   console.log('List failure UI xhr', xhr)
 }
 
+const onStatsSuccess = function (response, status, xhr) {
+  console.log('Stats Success UI response', response)
+  console.log('Stats Success UI status', status)
+  console.log('Stats Success UI xhr', xhr)
+  game.games = response.games
+  let win = 0
+  let loss = 0
+  let tie = 0
+  game.games.forEach((current, index, array) => {
+    const result = conditions.getGameWinner(current.cells)
+    if (result === 0) {
+      tie++
+    } else if (store.user.email === current['player_x'].email) {
+      switch (result) {
+        case 'x': {
+          win++
+          break
+        }
+        case 'o': {
+          loss++
+          break
+        }
+      }
+    } else if (store.user.email === current['player_o'].email) {
+      switch (result) {
+        case 'x': {
+          loss++
+          break
+        }
+        case 'o': {
+          win++
+          break
+        }
+      }
+    }
+  })
+  $('#wins').text(win)
+  $('#losses').text(loss)
+  $('#ties').text(tie)
+  $('#remaining').text(game.games.length - (win + loss + tie))
+  $('#stats').removeClass('hidden')
+}
+
+const onStatsFailure = function (response, status, xhr) {
+  console.log('Stats failure UI response', response)
+  console.log('Stats failure UI status', status)
+  console.log('Stats failure UI xhr', xhr)
+}
+
 module.exports = {
   onCreateSuccess,
   onCreateFailure,
@@ -96,5 +146,7 @@ module.exports = {
   onListSuccess,
   onListFailure,
   onGetSuccess,
-  onGetFailure
+  onGetFailure,
+  onStatsFailure,
+  onStatsSuccess
 }

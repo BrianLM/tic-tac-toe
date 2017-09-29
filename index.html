@@ -53,12 +53,15 @@
     <p>Tic-Tac-Toe is a match-3 game. Match your tile across any row to win. Use your tile to block a row to make sure your opponent does not finish a row!</p>
   </div>
   <br/>
-  <div id="game-controls" class="container">
-    <div class="row">
-      <section id="content"></section>
-    </div>
+
+
+  <div id="stats" class="row hidden">
+    <div class="col-xs-12 col-sm-3 to-center"><p>Your Wins: <span id="wins"></span></p></div>
+    <div class="col-xs-12 col-sm-3 to-center"><p>Your Losses: <span id="losses"></span></p></div>
+    <div class="col-xs-12 col-sm-3 to-center"><p>Your Ties: <span id="ties"></span></p></div>
+    <div class="col-xs-12 col-sm-3 to-center"><p>Incomplete Games: <span id="remaining"></span></p></div>
   </div>
-  <div id="playarea" class="hidden">
+  <div id="playarea" data-state="true" class="hidden">
     <div class="row" >
       <div class="col-xs-4"></div>
       <div class="col-xs-4">
@@ -67,6 +70,7 @@
       <div class="col-xs-4"></div>
     </div>
     <br/>
+
     <div class="container">
       <div class="row">
         <div class="col-xs-4 side-board"></div>
@@ -91,6 +95,7 @@
       </div>
     </div>
   </div>
+
   <div id="signin-modal" class="modal fade" role="dialog">
     <div class="modal-dialog">
       <!-- Modal content-->
