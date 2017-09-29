@@ -93,8 +93,8 @@ const getGameByID = function (event) {
     .then(gameUI.onGetSuccess)
     .catch(gameAPI.onJoinGame(data.game.id)
       .then(gameUI.onGetSuccess)
+      .catch(gameUI.onGetFailure)
     )
-  $('#join-modal').modal('hide')
 }
 
 const getGamesByUser = function (event) {

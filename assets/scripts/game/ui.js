@@ -74,12 +74,15 @@ const onGetSuccess = function (response, status, xhr) {
     $('#player').attr('data-tag', 'o')
     $('#opponent').attr('data-tag', 'player')
   }
+  $('#join-modal').modal('hide')
+  $('#joinComment').empty()
 }
 
 const onGetFailure = function (response, status, xhr) {
   console.log('Get failure UI response', response)
   console.log('Get failure UI status', status)
   console.log('Get failure UI xhr', xhr)
+  $('#joinComment').html('<p><mark>Sorry, no available game was found with the id ' + $('#input-join').val() + '</mark></p>')
 }
 
 const onListSuccess = function (response, status, xhr) {
