@@ -134,7 +134,6 @@ const addHandlers = function () {
   $('#forfeit-game').on('click', startNewGame)
   $('#save-game').on('click', startNewGame)
   $('#list-modal').on('click', 'button[data-gameid]', getSelectedGame)
-  $('#zero').on('change', getStatistics)
   $('#wins').on('keydown', getStatistics)
 }
 
