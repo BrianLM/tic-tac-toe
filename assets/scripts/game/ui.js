@@ -101,7 +101,6 @@ const onGetSuccess = function (response, status, xhr) {
       Authorization: 'Token token=' + store.user.token
     })
     gameWatcher.on('change', function (data) {
-      console.log(data)
       if (data.game && data.game.cells) {
         game.game.cells = data.game.cells[1]
         conditions.setTiles()
