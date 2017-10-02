@@ -1,61 +1,44 @@
-[![General Assembly Logo](https://camo.githubusercontent.com/1a91b05b8f4d44b5bbfb83abac2b0996d8e26c92/687474703a2f2f692e696d6775722e636f6d2f6b6538555354712e706e67)](https://generalassemb.ly/education/web-development-immersive)
+# The game
 
-# browser-template
+Tic-Tac-Toe is a 3-in-a-row game. Match your token across any row to win.
 
-A template for starting front-end projects. Webpack for `require` system, build
-pipeline, and development server. Boostrap and Handlebars.js included. No
-front-end frameworks included.
+## The tech
 
-## Installation
+This SPA page was written with Javascript, jQuery, SCSS, HTML5, and CSS Styling through Bootstrap.
 
-1.  [Download](../../archive/master.zip) this template.
-1.  Unzip and rename the template directory.
-1.  Empty [`README.md`](README.md) and fill with your own content.
-1.  Replace all instances of `ga-wdi-boston.browser-template` with the name of your project.
-1.  Move into the new project and `git init`
-1.  Add all of the files in your project with the command `git add -A`
-  -   *Note:* THIS IS THE ONLY TIME YOU SHOULD RUN THIS COMMAND
-1.  Commit all of your files with the command `git commit`
-  -   Your commit title should read `Initial commit`
-1.  Install dependencies with `npm install`.
+## With the user in mind
+- 'As a user I can sign up to log in and store my progress'
+- 'As a user I can give up if I know I will lose.'
+- 'As a user I can log in any time to go back to my game.'
+- 'As a user I can change my password.'
 
-## Structure
+## The planning
+### The start
+Planning for the game started with the outline of where everything should go. Navbar, game board and styling was put in place to lay the expectations for the backend.
+### The back end
+Back end development started with user authentication, after all, we can't play if we aren't known. Authentication design redefined our front end to make logins more interactive.
 
-Developers should store JavaScript files in [`assets/scripts`](assets/scripts).
-The "manifest" or entry-point is
-[`assets/scripts/index.js`](assets/scripts/index.js). In general, only
-application initialization goes in this file. It's normal for developers to
-start putting all code in this file, but encourage them to break out different
-responsibilities and use the `require` syntax put references where they're
-needed.
+Once logging in was available, creating games began. Game creation through the backend games API showed how to update the board: on response. No way to cheat since the game board is set by the API.
 
-Developers should set `config.apiOrigins.production` (and
-`config.apiOrigins.development` if it differs from the default).  With
-`apiOrigins` set, developers may rely on `config.apiOrigin` as the base for API
-URLs.
+This API-enforced board update immediately allowed getting old games to reset the board. Once the GET request returned the board, the tiles were reset and the game can continue.
 
-Developers should store styles in [`assets/styles`](assets/styles) and load them
-from [`assets/styles/index.scss`](assets/styles/index.scss).
+After getting single games was available, getting all games for statistics was made. At the same time, listing still open games was created so you can join any game from the game list modal.
 
-Developers should use [getFormFields](forms.md) to retrieve form data to send to
-an API.
+### Multi-Player
+Multiplayer from the Get and Patch API was created, but automatic updates to the board came later. First, the join other game was made, followed by playing the computer. After losing several games to the computer, the watcher funtion was put in place.
 
-To deploy a browser-template based SPA, run `grunt deploy`.
+With the watcher in place, and the invite to game added, multiplayer against a person was a reality.
 
-## Tasks
+## Future development
+Future desired updates include
+1. An email user link, rather than game ID sharing.
+2. Using the local machine to stay logged in as well as
+  - Custom Icons
+  - Style customizations
+3. Game ready notifications in the page for the games you are still playing and are waiting for you.
 
-Developers should run these often!
 
--   `grunt nag` or just `grunt`: runs code quality analysis tools on your code
-    and complains
--   `grunt make-standard`: reformats all your code in the JavaScript Standard Style
--   `grunt <server|serve|s>`: generates bundles, watches, and livereloads
--   `grunt test`: runs any automated tests, depends on `grunt build`
--   `grunt build`: place bundled styles and scripts where `index.html` can find
-    them
 
-## [License](LICENSE)
 
-1.  All content is licensed under a CC­BY­NC­SA 4.0 license.
-1.  All software code is licensed under GNU GPLv3. For commercial use or
-    alternative licensing, please contact legal@ga.co.
+## Wireframe
+![Wireframe](https://github.com/BrianLM/tic-tac-toe/blob/master/wireframe/wireframe.001.png)
