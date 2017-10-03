@@ -8,6 +8,9 @@ const signUpSuccess = function (response, status, xhr) {
   // console.log('Sign Up success UI status', status)
   // console.log('Sign Up success UI xhr', xhr)
   $('#signin-modal').modal('hide')
+  $('#signin input[name="credentials[email]"]').val($('#signup input[name="credentials[email]"]').val())
+  $('#signin input[name="credentials[password]"]').val($('#signup input[name="credentials[password]"]').val())
+  $('#signin').trigger('submit')
   clearModals()
 }
 
