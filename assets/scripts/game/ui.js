@@ -78,6 +78,7 @@ const onGetSuccess = function (response, status, xhr) {
   conditions.setTiles()
   $('#playarea').removeClass('hidden')
   $('#list-modal').modal('hide')
+  $('#opponent').attr('data-tag', 'none')
   if (game.game['player_x'].email === store.user.email) {
     $('#player-tag img').attr('src', conditions.turnIndicator('x')).attr('alt', 'x')
     $('#player').attr('data-tag', 'x')
