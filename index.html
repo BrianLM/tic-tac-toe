@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Play Tic-Tac-Toe</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Do not add `link` tags-->
+  <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+
+  <!-- Do not add `script` tags-->
+  <script src="public/vendor.js" type="text/javascript" charset="utf-8" defer></script>
+  <script src="public/application.js" type="text/javascript" charset="utf-8" defer></script>
+</head>
+
+<body class="container-fluid">
+  <div class="container-fluid">
+    <nav class="navbar navbar-inverse">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#siteNavbar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Tic-Tac-Toe</a>
+        </div>
+        <div class="collapse navbar-collapse" id="siteNavbar">
+          <ul class="nav navbar-nav">
+            <li><button id="new-game" data-user="user" class="btn btn-success navbar-btn hidden">New Game</button></li>
+            <li><button data-toggle="modal" data-target="#join-modal" data-user="user" class="btn btn-info navbar-btn hidden">Join Game</button></li>
+            <li><button id="list-games" data-user="user" class="btn btn-info navbar-btn hidden">Rejoin Games</button></li>
+            <li><button data-toggle="modal" data-target="#invite-modal" data-user="user" id="invite" class="btn btn-info navbar-btn hidden">Invite Player</button></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li data-user="no-user"><a href="#signin-modal" data-toggle="modal" >Sign Up</a></li>
+            <li data-user="no-user"><a href="#login-modal" data-toggle="modal">Login</a></li>
+            <li data-user="user" class="hidden">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="current-user">Current user</a>
+              <ul class="dropdown-menu">
+                <li><a href="#change-password-modal" data-toggle="modal">Change Password</a></li>
+                <li><a href="#" id="sign-out">Sign Out</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </div>
+  <div class="jumbotron-fluid jumbotron container">
+    <h1>Tic-Tac-Toe</h1><br/>
+    <p>Tic-Tac-Toe is a match-3 game. Match your tile across any row to win. Use your tile to block a row to make sure your opponent does not finish a row!</p>
+  </div>
+  <br/>
+
+
+  <div id="stats" class="row hidden" data-user="user">
+    <div class="col-xs-12 col-sm-3 to-center-xs"><p>Your Wins: <span id="wins"></span></p></div>
+    <div class="col-xs-12 col-sm-3 to-center-xs"><p>Your Losses: <span id="losses"></span></p></div>
+    <div class="col-xs-12 col-sm-3 to-center-xs"><p>Your Ties: <span id="ties"></span></p></div>
+    <div class="col-xs-12 col-sm-3 to-center-xs"><p>Incomplete Games: <span id="remaining"></span></p></div>
+  </div>
+  <div id="playarea" data-state="true" class="hidden">
+    <div class="row" >
+      <div class="col-xs-4"></div>
+      <div class="col-xs-4">
+        <h4 class="text-center" id="gamestate">Current move:<img id="turn" class="turn-img" src="https://www.clker.com/cliparts/e/0/f/4/12428125621652493290X_mark_18x18_02.svg.med.png" alt="X"></h4>
+      </div>
+      <div class="col-xs-4"></div>
+    </div>
+    <br/>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-4 side-board"></div>
+        <div class="col-xs-12 col-sm-4 gameboard" id="gameboard" data-player="x">
+          <div class="row">
+            <div data-move="" data-index="0" class="col-xs-4 grid bottom right"></div>
+            <div data-move="" data-index="1" class="col-xs-4 grid left bottom right"></div>
+            <div data-move="" data-index="2" class="col-xs-4 grid left bottom"></div>
+          </div>
+          <div class="row">
+            <div data-move="" data-index="3" class="col-xs-4 grid top bottom right"></div>
+            <div data-move="" data-index="4" class="col-xs-4 grid top bottom left right"></div>
+            <div data-move="" data-index="5" class="col-xs-4 grid top bottom left"></div>
+          </div>
+          <div class="row">
+            <div data-move="" data-index="6" class="col-xs-4 grid top right"></div>
+            <div data-move="" data-index="7" class="col-xs-4 grid top left right"></div>
+            <div data-move="" data-index="8" class="col-xs-4 grid top left"></div>
+          </div>
+        </div>
+        <div class="col-xs-4 side-board"></div>
+      </div>
+      <div class="row" id="play-as">
+        <div id="player" class="col-xs-12 col-sm-6 to-center-xs to-right-sm" data-tag="">
+          <p>You are playing as: <span id="player-tag"><img class="turn-img" src="https://www.clker.com/cliparts/e/0/f/4/12428125621652493290X_mark_18x18_02.svg.med.png" alt="X"></span></p>
+        </div>
+        <div id="opponent" class="col-xs-12 col-sm-6 to-center-xs to-left-sm" data-tag="none">
+          <p id="opponent-text">Would you like to play the computer?<span id="opponent-tag"></span><button id="ai-on" class="btn btn-md btn-default">Play AI</button></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- Define Modals  -->
+  <div id="signin-modal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <form id="signup" data-modal="signin-modal">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Sign Up!</h4>
+        </div>
+        <div class="modal-body">
+          <p>Your email is your user name.</p>
+          <input name="credentials[email]" type="email" placeholder="Your email address" required>
+          <input name="credentials[password]" type="password" placeholder="A simple password" required>
+          <input name="credentials[password_confirmation]" type="password" placeholder="The same password" required>
+          <section id="signUpComment"></section>
+       </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <input type="submit" class="btn btn-default" value="Submit &raquo;">
+        </div>
+      </form>
+      </div>
+    </div>
+  </div>
+
+  <div id="login-modal" class="modal fade" data-backdrop="false" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <form id="signin" data-modal="login-modal">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Sign In!</h4>
+        </div>
+        <div class="modal-body">
+          <p>Welcome back. Remember, your email is your user name.</p>
+          <input name="credentials[email]" type="email" placeholder="Your email address" required>
+          <input name="credentials[password]" type="password" placeholder="A simple password" required>
+          <section id="signInComment"></section>
+       </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <input type="submit" class="btn btn-default" value="Submit &raquo;">
+        </div>
+      </form>
+      </div>
+    </div>
+  </div>
+
+  <div id="change-password-modal" class="modal fade" data-backdrop="false" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <form id="change-password" data-modal="change-password-modal">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Change your password</h4>
+        </div>
+        <div class="modal-body">
+          <p>Change your password?</p>
+          <input name="passwords[old]" type="password" placeholder="Your old password" required>
+          <input name="passwords[new]" type="password" placeholder="Your new password" required>
+          <br/>
+          <section id="changeComment"></section>
+       </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <input type="submit" class="btn btn-default" value="Submit &raquo;">
+        </div>
+      </form>
+      </div>
+    </div>
+  </div>
+
+  <div id="join-modal" class="modal fade" data-backdrop="false" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <form id="join-form" data-modal="change-password-modal">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Join a game</h4>
+        </div>
+        <div class="modal-body">
+          <p>Have a game to join? Want to pick up where you left off?</p>
+          <input id="input-join" name="game[id]" type="text" placeholder="Enter the game ID" required>
+          <br/>
+          <section id="joinComment"></section>
+       </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <input type="submit" class="btn btn-default" value="Submit &raquo;">
+        </div>
+      </form>
+      </div>
+    </div>
+  </div>
+
+  <div id="confirm-new-modal" class="modal fade" data-backdrop="false" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Start a new game</h4>
+        </div>
+        <div class="modal-body">
+          <p>Do you want to forfeit this game, or come back to it later?</p>
+          <br/>
+       </div>
+        <div class="modal-footer">
+          <button id="forfeit-game" type="button" class="btn btn-default">Forfeit</button>
+          <button id="save-game" type="button" class="btn btn-default">Save</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <div id="list-modal" class="modal fade" data-backdrop="false" role="dialog">
+      <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Join a game</h4>
+          </div>
+          <div class="modal-body">
+            <p>Here's a list of the games you are currently in:</p>
+            <br/>
+            <section id="listContent"></section>
+         </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+      <div id="invite-modal" class="modal fade" data-backdrop="false" role="dialog">
+        <div class="modal-dialog">
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Invite someone to join you.</h4>
+            </div>
+            <div class="modal-body">
+              <br/>
+              <section id="inviteContent"></section>
+           </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+</body>
+
+</html>
