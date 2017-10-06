@@ -6,9 +6,6 @@ const config = require('../config')
 const watcher = require('../watcher')
 
 const onCreateSuccess = function (response, status, xhr) {
-  // console.log('Create game success UI response', response)
-  // console.log('Create game success UI status', status)
-  // console.log('Create game success UI xhr', xhr)
   game.game = response.game
   $('#playarea').removeClass('hidden')
   $('#confirm-new-modal').modal('hide')
@@ -37,41 +34,23 @@ const onInviteRequest = function () {
 }
 
 const onCreateFailure = function (response, status, xhr) {
-  // console.log('Create game failure UI response', response)
-  // console.log('Create game failure UI status', status)
-  // console.log('Create game failure UI xhr', xhr)
 }
 
 const onMoveSuccess = function (response, status, xhr) {
-  // console.log('Move success UI response', response)
-  // console.log('Move success UI status', status)
-  // console.log('Move success UI xhr', xhr)
   game.game = response.game
   conditions.setTiles()
 }
 
 const onMoveFailure = function (response, status, xhr) {
-  // console.log('Move failure UI response', response)
-  // console.log('Move failure UI status', status)
-  // console.log('Move failure UI xhr', xhr)
 }
 
 const onFinishSuccess = function (response, status, xhr) {
-  // console.log('Finish Success UI response', response)
-  // console.log('Finish Success UI status', status)
-  // console.log('Finish Success UI xhr', xhr)
 }
 
 const onFinishFailure = function (response, status, xhr) {
-  // console.log('Finish failure UI response', response)
-  // console.log('Finish failure UI status', status)
-  // console.log('Finish failure UI xhr', xhr)
 }
 
 const onGetSuccess = function (response, status, xhr) {
-  // console.log('Get success UI response', response)
-  // console.log('Get success UI status', status)
-  // console.log('Get success UI xhr', xhr)
   game.game = response.game
   const online = game.game['player_o'] !== null
   $('#input-join').val('')
@@ -113,20 +92,17 @@ const onGetSuccess = function (response, status, xhr) {
 }
 
 const onGetFailure = function (response, status, xhr) {
-  // console.log('Get failure UI response', response)
-  // console.log('Get failure UI status', status)
-  // console.log('Get failure UI xhr', xhr)
   $('#joinComment').html('<p><mark>Sorry, no available game was found with the id ' + $('#input-join').val() + '</mark></p>')
 }
 
 const onListSuccess = function (response, status, xhr) {
-  // console.log('List Success UI response', response)
-  // console.log('List Success UI status', status)
-  // console.log('List Success UI xhr', xhr)
   game.games = response.games
   const listGameArea = $('#listContent')
   listGameArea.empty()
   const gameAreaForm = $('<form/>')
+  if (game.games.count === undefined) {
+    gameAreaForm.append('<p>No games found that can be played.</p>')
+  }
   game.games.forEach((current, index, array) => {
     if (current['player_o'] === null) {
       gameAreaForm.append('<div><p><button class="btn btn-default btn-md" data-gameid="' + current.id + '">' + current.id + '</button>As player X</p></div>')
@@ -138,15 +114,9 @@ const onListSuccess = function (response, status, xhr) {
 }
 
 const onListFailure = function (response, status, xhr) {
-  // console.log('List failure UI response', response)
-  // console.log('List failure UI status', status)
-  // console.log('List failure UI xhr', xhr)
 }
 
 const onStatsSuccess = function (response, status, xhr) {
-  // console.log('Stats Success UI response', response)
-  // console.log('Stats Success UI status', status)
-  // console.log('Stats Success UI xhr', xhr)
   game.games = response.games
   let win = 0
   let loss = 0
@@ -183,13 +153,9 @@ const onStatsSuccess = function (response, status, xhr) {
   $('#losses').text(loss)
   $('#ties').text(tie)
   $('#remaining').text(game.games.length - (win + loss + tie))
-  $('#stats').removeClass('hidden')
 }
 
 const onStatsFailure = function (response, status, xhr) {
-  // console.log('Stats failure UI response', response)
-  // console.log('Stats failure UI status', status)
-  // console.log('Stats failure UI xhr', xhr)
 }
 
 module.exports = {
