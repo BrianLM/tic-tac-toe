@@ -29,12 +29,12 @@ const signInFailure = function (response, status, xhr) {
 
 // Change Password promises
 const changePasswordSuccess = function (response, status, xhr) {
-  $('#changeComment').append('<p>Password change successful.</p>')
+  $('#changeComment').append('<br/><p>Password change successful.</p>')
   clearModals()
 }
 
 const changePasswordFailure = function (response, status, xhr) {
-  $('#changeComment').append('<p><mark>Could not update password.</mark></p>')
+  $('#changeComment').append('<br/><p><mark>Could not update password.</mark></p>')
 }
 
 const signOutSuccess = function (response, status, xhr) {
@@ -53,7 +53,6 @@ const clearModals = function () {
   $('input[name="passwords[new]"]').val('')
   $('input[name="credentials[password_confirmation]"]').val('')
   $('#signInComment').text('')
-  $('#changeComment').text('')
   $('#signUpComment').text('')
 }
 

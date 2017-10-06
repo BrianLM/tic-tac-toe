@@ -173,6 +173,9 @@ const addHandlers = function () {
   $('#wins').on('keypress', aiTurn)
   $('#invite').on('click', onInvite)
   $('.navbar-btn').on('click', tryCollapse)
+  $('#change-password-modal').on('hidden.bs.modal', function () {
+    $('#changeComment').empty()
+  })
 }
 
 module.exports = {
